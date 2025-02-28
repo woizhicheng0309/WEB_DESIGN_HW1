@@ -3,45 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>WEBSITE CURRENTLY NOT AVAILABLE</title>
+    <meta name="description" content="We're upgrading our system to serve you better!">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-            background-size: cover;
-            background-position: center;
-        }
-        h1 {
-            width: 100%;
-            text-align: center;
-            margin: 0;
-            padding: 20px 0;
-            font-size: 50px;
-            font-weight: bold;
-            color: black;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            animation: textAnimation 3s infinite;
-        }
-        .content {
-            margin-bottom: 20px; /* Adjust this value as needed */
-        }
-        .styled-paragraph {
-            font-size: 2em;
-            font-weight: bold;
-            color: black;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            animation: textAnimation 3s infinite;
-        }
         @keyframes textAnimation {
             0% {
                 transform: scale(1);
@@ -53,15 +17,66 @@
                 transform: scale(1);
             }
         }
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            background-size: cover;
+            background-position: center;
+            background-color: #191414; /* Spotify black */
+            color: #1DB954; /* Spotify green */
+        }
+        h1 {
+            width: 100%;
+            text-align: center;
+            margin: 0;
+            padding: 20px 0;
+            font-size: 35px;
+            font-weight: bold;
+            color: #1DB954; /* Spotify green */
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            animation: textAnimation 3s infinite;
+        }
+        h2 {
+            margin: 20px 0;
+        }
+        .content {
+            margin-bottom: 20px; /* Adjust this value as needed */
+        }
+        .styled-paragraph {
+            font-size: 2em;
+            font-weight: bold;
+            color: #1DB954; /* Spotify green */
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            animation: textAnimation 3s infinite;
+        }
+        .spotify-logo {
+            width: 300px;
+            animation: textAnimation 3s infinite;
+        }
+        .move-up {
+            bottom: 10%; /* Adjust this value to move the element up */
+        }
     </style>
 </head>
 <body>
-<h1>We're upgrading our system to serve you better!</h1>
+<h1><img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" alt="Spotify Logo" class="spotify-logo"></h1>
 <div class="content">
-    <p class="styled-paragraph">Take the duck for a walk in meanwhile</p>
+    <p1 class="styled-paragraph move-up">We're upgrading our system to serve you better!</p1>
+    <p2 class="styled-paragraph">Take the duck for a walk in meanwhile</p2>
 </div>
 <audio id="duckSound" src="materials/Voice/DuckQuack.mp3"></audio>
-<script>
+<script defer>
     const totalImages = 20;
     const duckImages = [];
     // Preload sound
@@ -71,24 +86,24 @@
     for (let i = 1; i <= totalImages; i++) {
         const img = new Image();
         img.src = `materials/Images/Duck${i}.jpg`;
+        img.alt = `Duck ${i}`;
         duckImages.push(img);
     }
 
     document.body.addEventListener('click', function() {
         duckSound.currentTime = 0; // Rewind to the start
         duckSound.play().catch(error => console.error('Error playing sound:', error));
+
+        // Cycle the image from Duck1 to Duck20
+        const currentImage = document.body.style.backgroundImage.match(/Duck(\d+)\.jpg/);
+        const duckImageNumber = currentImage ? parseInt(currentImage[1]) : 1;
+        const nextDuckImageNumber = duckImageNumber === totalImages ? 1 : duckImageNumber + 1;
+        document.body.style.backgroundImage = `url('${duckImages[nextDuckImageNumber - 1].src}')`;
     });
 
     // Prevent the user from selecting the text
     document.body.addEventListener('selectstart', function(event) {
         event.preventDefault();
-    });
-
-    document.body.addEventListener('click', function() {
-        // Cycle the image from Duck1 to Duck20
-        const duckImageNumber = parseInt(document.body.style.backgroundImage.match(/Duck(\d+)\.jpg/)[1]);
-        const nextDuckImageNumber = duckImageNumber === totalImages ? 1 : duckImageNumber + 1;
-        document.body.style.backgroundImage = `url('${duckImages[nextDuckImageNumber - 1].src}')`;
     });
 
     // Set initial background image
