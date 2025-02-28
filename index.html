@@ -48,25 +48,34 @@
 </div>
 <audio id="duckSound" src="materials/Voice/DuckQuack.mp3"></audio>
 <script>
+    const totalImages = 20;
+    const duckImages = [];
+    const duckSound = new Audio('materials/Voice/DuckQuack.mp3');
+
+    // Preload images
+    for (let i = 1; i <= totalImages; i++) {
+        const img = new Image();
+        img.src = `materials/Images/Duck${i}.jpg`;
+        duckImages.push(img);
+    }
+
     document.body.addEventListener('click', function() {
-        const duckSound = document.getElementById('duckSound');
         duckSound.currentTime = 0; // Rewind to the start
         duckSound.play().catch(error => console.error('Error playing sound:', error));
     });
 
-    // prevent the user from selecting the text
+    // Prevent the user from selecting the text
     document.body.addEventListener('selectstart', function(event) {
         event.preventDefault();
     });
 
-    document.body.addEventListener('click',function ()
-    {
-        // cycle the image from Duck1 to Duck20
+    document.body.addEventListener('click', function() {
+        // Cycle the image from Duck1 to Duck20
         const duckImage = document.getElementById('duckImage');
         const duckImageNumber = parseInt(duckImage.src.match(/Duck(\d+)\.jpg/)[1]);
-        const nextDuckImageNumber = duckImageNumber === 20 ? 1 : duckImageNumber + 1;
-        duckImage.src = `materials/Images/Duck${nextDuckImageNumber}.jpg`;
-    })
+        const nextDuckImageNumber = duckImageNumber === totalImages ? 1 : duckImageNumber + 1;
+        duckImage.src = duckImages[nextDuckImageNumber - 1].src;
+    });
 </script>
 </body>
 </html>
