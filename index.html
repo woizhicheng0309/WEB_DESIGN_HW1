@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WEBSITE CURRENTLY NOT AVAILABLE</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        h1 {
+            width: 100%;
+            text-align: center;
+            margin: 0;
+            padding: 20px 0;
+            font-size: 50px;
+            font-weight: bold;
+        }
+        .content {
+            margin-bottom: 20px; /* Adjust this value as needed */
+        }
+        .styled-paragraph {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+        }
+        .full-page-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+<h1>We're upgrading our system to serve you better!</h1>
+<div class="content">
+    <p class="styled-paragraph">Take the duck for a walk in meanwhile</p>
+    <img id="duckImage" src="materials/Images/Duck1.jpg" alt="Duck" class="full-page-image"/>
+</div>
+<audio id="duckSound" src="materials/Voice/DuckQuack.mp3"></audio>
+<script>
+    document.body.addEventListener('click', function() {
+        const duckSound = document.getElementById('duckSound');
+        duckSound.currentTime = 0; // Rewind to the start
+        duckSound.play().catch(error => console.error('Error playing sound:', error));
+    });
+
+    // prevent the user from selecting the text
+    document.body.addEventListener('selectstart', function(event) {
+        event.preventDefault();
+    });
+
+    document.body.addEventListener('click',function ()
+    {
+        // cycle the image from Duck1 to Duck20
+        const duckImage = document.getElementById('duckImage');
+        const duckImageNumber = parseInt(duckImage.src.match(/Duck(\d+)\.jpg/)[1]);
+        const nextDuckImageNumber = duckImageNumber === 20 ? 1 : duckImageNumber + 1;
+        duckImage.src = `materials/Images/Duck${nextDuckImageNumber}.jpg`;
+    })
+</script>
+</body>
+</html>
