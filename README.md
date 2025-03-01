@@ -1,10 +1,10 @@
 Song Chords
+
 1. Jingle bell
 E  E  E   E  E  E  
 E  I  Q  W  E  
 R  R  R  R  R  E  E  E  
 E  W  W  E  W  U  
-
 E  E  E   E  E  E  
 E  I  Q  W  E  
 R  R  R  R  R  E  E  E  
