@@ -67,13 +67,36 @@
         .move-up {
             bottom: 10%; /* Adjust this value to move the element up */
         }
+        .instructions {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 150px;
+            padding: 10px;
+            border: 2px solid #1DB954; /* Spotify green */
+            background-color: #191414; /* Spotify black */
+            color: #1DB954; /* Spotify green */
+            text-align: left;
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
+<div class="instructions">
+    <p>Let the duck sing!</p>
+    <p>Q - Do</p>
+    <p>W - Re</p>
+    <p>E - Mi</p>
+    <p>R - Fa</p>
+    <p>U - So</p>
+    <p>I - La</p>
+    <p>O - Ti</p>
+    <p>P - Do'</p>
+</div>
 <h1><img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" alt="Spotify Logo" class="spotify-logo"></h1>
 <div class="content">
     <p1 class="styled-paragraph move-up">We're upgrading our system to serve you better!</p1>
-    <p2 class="styled-paragraph">Take the duck for a walk in meanwhile</p2>
+    <p2 class="styled-paragraph">Take the duck for a walk (by clicking) in meanwhile</p2>
 </div>
 <audio id="duckSound" src="materials/Voice/DuckQuack.mp3"></audio>
 <script defer>
@@ -90,15 +113,22 @@
         duckImages.push(img);
     }
 
-    document.body.addEventListener('click', function() {
-        duckSound.currentTime = 0; // Rewind to the start
-        duckSound.play().catch(error => console.error('Error playing sound:', error));
-
+    function handleClick() {
         // Cycle the image from Duck1 to Duck20
         const currentImage = document.body.style.backgroundImage.match(/Duck(\d+)\.jpg/);
         const duckImageNumber = currentImage ? parseInt(currentImage[1]) : 1;
         const nextDuckImageNumber = duckImageNumber === totalImages ? 1 : duckImageNumber + 1;
         document.body.style.backgroundImage = `url('${duckImages[nextDuckImageNumber - 1].src}')`;
+    }
+
+    function playDuckSound() {
+        duckSound.currentTime = 0; // Rewind to the start
+        duckSound.play().catch(error => console.error('Error playing sound:', error));
+    }
+
+    document.body.addEventListener('click', function() {
+        playDuckSound();
+        handleClick();
     });
 
     // Prevent the user from selecting the text
@@ -108,6 +138,28 @@
 
     // Set initial background image
     document.body.style.backgroundImage = `url('${duckImages[0].src}')`;
+
+    // Map keys to sound files
+    const soundMap = {
+        'Q': 'materials/Voice/Do.mp3',
+        'W': 'materials/Voice/Re.mp3',
+        'E': 'materials/Voice/Mi.mp3',
+        'R': 'materials/Voice/Fa.mp3',
+        'U': 'materials/Voice/So.mp3',
+        'I': 'materials/Voice/La.mp3',
+        'O': 'materials/Voice/Ti.mp3',
+        'P': 'materials/Voice/Do2.mp3',
+    };
+
+    // Play sound on key press
+    document.addEventListener('keydown', function(event) {
+        const soundFile = soundMap[event.key.toUpperCase()];
+        if (soundFile) {
+            const audio = new Audio(soundFile);
+            audio.play().catch(error => console.error('Error playing sound:', error));
+            handleClick();
+        }
+    });
 </script>
 </body>
 </html>
