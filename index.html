@@ -113,6 +113,24 @@
         duckImages.push(img);
     }
 
+    // Map keys to sound files
+    const soundMap = {
+        'Q': 'materials/Voice/Do.mp3',
+        'W': 'materials/Voice/Re.mp3',
+        'E': 'materials/Voice/Mi.mp3',
+        'R': 'materials/Voice/Fa.mp3',
+        'U': 'materials/Voice/So.mp3',
+        'I': 'materials/Voice/La.mp3',
+        'O': 'materials/Voice/Ti.mp3',
+        'P': 'materials/Voice/Do2.mp3',
+    };
+
+    // Preload all sounds
+    const sounds = {};
+    for (const key in soundMap) {
+        sounds[key] = new Audio(soundMap[key]);
+    }
+
     function handleClick() {
         // Cycle the image from Duck1 to Duck20
         const currentImage = document.body.style.backgroundImage.match(/Duck(\d+)\.jpg/);
@@ -139,24 +157,12 @@
     // Set initial background image
     document.body.style.backgroundImage = `url('${duckImages[0].src}')`;
 
-    // Map keys to sound files
-    const soundMap = {
-        'Q': 'materials/Voice/Do.mp3',
-        'W': 'materials/Voice/Re.mp3',
-        'E': 'materials/Voice/Mi.mp3',
-        'R': 'materials/Voice/Fa.mp3',
-        'U': 'materials/Voice/So.mp3',
-        'I': 'materials/Voice/La.mp3',
-        'O': 'materials/Voice/Ti.mp3',
-        'P': 'materials/Voice/Do2.mp3',
-    };
-
     // Play sound on key press
     document.addEventListener('keydown', function(event) {
-        const soundFile = soundMap[event.key.toUpperCase()];
+        const soundFile = sounds[event.key.toUpperCase()];
         if (soundFile) {
-            const audio = new Audio(soundFile);
-            audio.play().catch(error => console.error('Error playing sound:', error));
+            soundFile.currentTime = 0; // Rewind to the start
+            soundFile.play().catch(error => console.error('Error playing sound:', error));
             handleClick();
         }
     });
